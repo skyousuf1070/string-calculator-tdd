@@ -9,10 +9,18 @@ public class StringCalculator {
             return 0;
         }
         if (numbers.startsWith("//[")) {
-            int indexOfOpenBracket = numbers.indexOf("[");
-            int indexOfClosedBracket = numbers.indexOf("]");
-            String delimiter = numbers.substring(indexOfOpenBracket + 1, indexOfClosedBracket);
-            return calculateSum(numbers.substring(numbers.indexOf("\n") + 1).split(Pattern.quote(delimiter)));
+            ArrayList<String> delimiters = new ArrayList<>();
+            int indexOfOpenBracket, indexOfClosedBracket;
+            String delimiter;
+            while (numbers.contains("[")) {
+                indexOfOpenBracket = numbers.indexOf("[");
+                indexOfClosedBracket = numbers.indexOf("]");
+                delimiter = numbers.substring(indexOfOpenBracket + 1, indexOfClosedBracket);
+                delimiters.add(Pattern.quote(delimiter));
+                numbers = numbers.substring(indexOfClosedBracket + 1);
+            }
+            delimiter = String.join("|", delimiters);
+            return calculateSum(numbers.substring(numbers.indexOf("\n") + 1).split(delimiter));
         } else if (numbers.startsWith("//")) {
             String delimiter = String.valueOf(numbers.charAt(2));
             return calculateSum(numbers.substring(4).split(Pattern.quote(delimiter)));
