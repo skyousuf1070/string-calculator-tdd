@@ -26,4 +26,12 @@ public class StringCalculatorTest {
     public void shouldReturnTheSumOfTwoNumbersWhenTwoNumbersArePassedByCommaSeparated() {
         Assertions.assertEquals(8, calculator.add("2,6"));
     }
+
+    @Test
+    public void shouldReturnTheSumOfMultipleNumbersWhenMultipleNumbersArePassedByCommaSeparated() {
+        Assertions.assertEquals(11, calculator.add("2,6,3"));
+        Assertions.assertEquals(10, calculator.add("1,2,3,4"));
+        Assertions.assertEquals(15, calculator.add("1,2,3,4,5"));
+        Assertions.assertEquals(55, calculator.add("1,2,3,4,5,6,7,8,9,10"));
+    }
 }
