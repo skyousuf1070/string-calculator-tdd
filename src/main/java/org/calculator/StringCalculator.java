@@ -18,16 +18,23 @@ public class StringCalculator {
 
     private int calculateSum(String[] inputNumbers) {
         int sum = 0;
-        ArrayList<Integer> negatives = new ArrayList<>();
+        ArrayList<Integer> negativeNumbers = new ArrayList<>();
         for (String number : inputNumbers) {
             int parsedNumber = Integer.parseInt(number);
             if (parsedNumber < 0) {
-                negatives.add(parsedNumber);
+                negativeNumbers.add(parsedNumber);
             }
             sum += parsedNumber;
         }
-        if (!negatives.isEmpty()) {
-            throw new IllegalArgumentException("negatives not allowed " + negatives.getFirst());
+        if (!negativeNumbers.isEmpty()) {
+            StringBuilder commaSeparatedNegativeNumbers = new StringBuilder();
+            for (int index = 0; index < negativeNumbers.size(); index++) {
+                commaSeparatedNegativeNumbers.append(negativeNumbers.get(index));
+                if (index < negativeNumbers.size() - 1) {
+                    commaSeparatedNegativeNumbers.append(", ");
+                }
+            }
+            throw new IllegalArgumentException("negatives not allowed " + commaSeparatedNegativeNumbers);
         }
         return sum;
     }
