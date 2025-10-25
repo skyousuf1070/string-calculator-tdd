@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class StringCalculatorTest {
     private StringCalculator calculator;
 
@@ -14,39 +16,45 @@ public class StringCalculatorTest {
 
     @Test
     public void shouldReturnZeroWhenTheNumbersAreEmpty() {
-        Assertions.assertEquals(0, calculator.add(""));
+        assertEquals(0, calculator.add(""));
     }
 
     @Test
     public void shouldReturnTheSameNumberWhenOnlyOneNumberIsPassed() {
-        Assertions.assertEquals(5, calculator.add("5"));
+        assertEquals(5, calculator.add("5"));
     }
 
     @Test
     public void shouldReturnTheSumOfTwoNumbersWhenTwoNumbersArePassedByCommaSeparated() {
-        Assertions.assertEquals(8, calculator.add("2,6"));
+        assertEquals(8, calculator.add("2,6"));
     }
 
     @Test
     public void shouldReturnTheSumOfMultipleNumbersWhenMultipleNumbersArePassedByCommaSeparated() {
-        Assertions.assertEquals(11, calculator.add("2,6,3"));
-        Assertions.assertEquals(10, calculator.add("1,2,3,4"));
-        Assertions.assertEquals(15, calculator.add("1,2,3,4,5"));
-        Assertions.assertEquals(55, calculator.add("1,2,3,4,5,6,7,8,9,10"));
+        assertEquals(11, calculator.add("2,6,3"));
+        assertEquals(10, calculator.add("1,2,3,4"));
+        assertEquals(15, calculator.add("1,2,3,4,5"));
+        assertEquals(55, calculator.add("1,2,3,4,5,6,7,8,9,10"));
     }
 
     @Test
     public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedByCommasAndNewLines() {
-        Assertions.assertEquals(6, calculator.add("1\n2,3"));
+        assertEquals(6, calculator.add("1\n2,3"));
     }
 
     @Test
     public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedBySemiColonDelimiter() {
-        Assertions.assertEquals(3, calculator.add("//;\n1;2"));
+        assertEquals(3, calculator.add("//;\n1;2"));
     }
 
     @Test
     public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedByCustomDelimiter() {
-        Assertions.assertEquals(6, calculator.add("//|\n1|2|3"));
+        assertEquals(6, calculator.add("//|\n1|2|3"));
+    }
+
+    @Test
+    public void shouldThrowAnExceptionWithNegativesNotAllowedMessageWhenOneNegativeNumberIsPassed() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("1,2,-3"));
+        assertEquals("negatives not allowed -3", exception.getMessage());
     }
 }

@@ -1,5 +1,6 @@
 package org.calculator;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class StringCalculator {
@@ -17,8 +18,16 @@ public class StringCalculator {
 
     private int calculateSum(String[] inputNumbers) {
         int sum = 0;
+        ArrayList<Integer> negatives = new ArrayList<>();
         for (String number : inputNumbers) {
-            sum += Integer.parseInt(number);
+            int parsedNumber = Integer.parseInt(number);
+            if (parsedNumber < 0) {
+                negatives.add(parsedNumber);
+            }
+            sum += parsedNumber;
+        }
+        if (!negatives.isEmpty()) {
+            throw new IllegalArgumentException("negatives not allowed " + negatives.getFirst());
         }
         return sum;
     }
