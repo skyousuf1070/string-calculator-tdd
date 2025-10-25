@@ -55,12 +55,12 @@ public class StringCalculatorTest {
     @Test
     public void shouldThrowAnExceptionWithNegativesNotAllowedMessageWhenOneNegativeNumberIsPassed() {
         Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("1,2,-3"));
-        assertEquals("negatives not allowed -3", exception.getMessage());
+        assertEquals("negative numbers not allowed -3", exception.getMessage());
     }
 
     @Test
     public void shouldThrowAnExceptionWithNegativesNotAllowedCommaSeparatedNegativeNumbersMessageWhenNegativeNumbersArePassed() {
         Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("-1,2,-3"));
-        assertEquals("negatives not allowed -1, -3", exception.getMessage());
+        assertEquals("negative numbers not allowed -1, -3", exception.getMessage());
     }
 }

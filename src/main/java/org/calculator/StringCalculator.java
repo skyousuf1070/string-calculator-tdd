@@ -34,7 +34,7 @@ public class StringCalculator {
                     commaSeparatedNegativeNumbers.append(", ");
                 }
             }
-            throw new IllegalArgumentException("negatives not allowed " + commaSeparatedNegativeNumbers);
+            throw new IllegalArgumentException("negative numbers not allowed " + commaSeparatedNegativeNumbers);
         }
         return sum;
     }
