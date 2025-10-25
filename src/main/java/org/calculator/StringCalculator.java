@@ -24,6 +24,7 @@ public class StringCalculator {
             if (parsedNumber < 0) {
                 negativeNumbers.add(parsedNumber);
             }
+            if (parsedNumber > 1000) continue;
             sum += parsedNumber;
         }
         if (!negativeNumbers.isEmpty()) {

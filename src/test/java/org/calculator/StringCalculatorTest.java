@@ -63,4 +63,9 @@ public class StringCalculatorTest {
         Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> calculator.add("-1,2,-3"));
         assertEquals("negative numbers not allowed -1, -3", exception.getMessage());
     }
+
+    @Test
+    public void shouldNotAddToTheSumWhenNumberIsMoreThanThousand() {
+        assertEquals(2, calculator.add("2,1002"));
+    }
 }
