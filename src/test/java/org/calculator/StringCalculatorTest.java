@@ -44,4 +44,9 @@ public class StringCalculatorTest {
     public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedBySemiColonDelimiter() {
         Assertions.assertEquals(3, calculator.add("//;\n1;2"));
     }
+
+    @Test
+    public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedByCustomDelimiter() {
+        Assertions.assertEquals(6, calculator.add("//|\n1|2|3"));
+    }
 }
