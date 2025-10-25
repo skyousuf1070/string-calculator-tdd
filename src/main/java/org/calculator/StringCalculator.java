@@ -8,22 +8,23 @@ public class StringCalculator {
         if (numbers.isEmpty()) {
             return 0;
         }
-        if (numbers.startsWith("//[")) {
+        if (numbers.startsWith("//")) {
             ArrayList<String> delimiters = new ArrayList<>();
             int indexOfOpenBracket, indexOfClosedBracket;
-            String delimiter;
-            while (numbers.contains("[")) {
-                indexOfOpenBracket = numbers.indexOf("[");
-                indexOfClosedBracket = numbers.indexOf("]");
-                delimiter = numbers.substring(indexOfOpenBracket + 1, indexOfClosedBracket);
+            String delimiter, remainingInput = numbers;
+            while (remainingInput.contains("[")) {
+                indexOfOpenBracket = remainingInput.indexOf("[");
+                indexOfClosedBracket = remainingInput.indexOf("]");
+                delimiter = remainingInput.substring(indexOfOpenBracket + 1, indexOfClosedBracket);
                 delimiters.add(Pattern.quote(delimiter));
-                numbers = numbers.substring(indexOfClosedBracket + 1);
+                remainingInput = remainingInput.substring(indexOfClosedBracket + 1);
             }
-            delimiter = String.join("|", delimiters);
+            if (numbers.startsWith("//[")) {
+                delimiter = String.join("|", delimiters);
+            } else {
+                delimiter = Pattern.quote(String.valueOf(numbers.charAt(2)));
+            }
             return calculateSum(numbers.substring(numbers.indexOf("\n") + 1).split(delimiter));
-        } else if (numbers.startsWith("//")) {
-            String delimiter = String.valueOf(numbers.charAt(2));
-            return calculateSum(numbers.substring(4).split(Pattern.quote(delimiter)));
         } else {
             return calculateSum(numbers.split(",|\n"));
         }
