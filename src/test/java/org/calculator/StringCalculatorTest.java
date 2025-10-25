@@ -34,4 +34,9 @@ public class StringCalculatorTest {
         Assertions.assertEquals(15, calculator.add("1,2,3,4,5"));
         Assertions.assertEquals(55, calculator.add("1,2,3,4,5,6,7,8,9,10"));
     }
+
+    @Test
+    public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedByCommasAndNewLines() {
+        Assertions.assertEquals(6, calculator.add("1\n2,3"));
+    }
 }
