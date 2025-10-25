@@ -70,12 +70,12 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void shouldSupportSingleCharacterCustomDelimiterInBrackets() {
+    public void shouldReturnSumOfNumbersSeparatedBySingleCharacterCustomDelimiterInBrackets() {
         assertEquals(6, calculator.add("//[*]\n1*2*3"));
     }
 
     @Test
-    public void shouldSupportMultiCharacterCustomDelimiterInBrackets() {
+    public void shouldReturnSumOfNumbersSeparatedByMultiCharacterCustomDelimiterInBrackets() {
         assertEquals(6, calculator.add("//[***]\n1***2***3"));
     }
 }
