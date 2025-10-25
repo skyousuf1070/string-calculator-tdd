@@ -39,4 +39,9 @@ public class StringCalculatorTest {
     public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedByCommasAndNewLines() {
         Assertions.assertEquals(6, calculator.add("1\n2,3"));
     }
+
+    @Test
+    public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedBySemiColonDelimiter() {
+        Assertions.assertEquals(3, calculator.add("//;\n1;2"));
+    }
 }
