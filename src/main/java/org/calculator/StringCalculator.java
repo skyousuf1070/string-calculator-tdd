@@ -9,8 +9,10 @@ public class StringCalculator {
             return 0;
         }
         if (numbers.startsWith("//[")) {
-            String delimiter = String.valueOf(numbers.charAt(3));
-            return calculateSum(numbers.substring(6).split(Pattern.quote(delimiter)));
+            int indexOfOpenBracket = numbers.indexOf("[");
+            int indexOfClosedBracket = numbers.indexOf("]");
+            String delimiter = numbers.substring(indexOfOpenBracket + 1, indexOfClosedBracket);
+            return calculateSum(numbers.substring(numbers.indexOf("\n") + 1).split(Pattern.quote(delimiter)));
         } else if (numbers.startsWith("//")) {
             String delimiter = String.valueOf(numbers.charAt(2));
             return calculateSum(numbers.substring(4).split(Pattern.quote(delimiter)));
