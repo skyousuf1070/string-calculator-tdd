@@ -9,4 +9,11 @@ public class StringCalculatorTest {
         StringCalculator calculator = new StringCalculator();
         Assertions.assertEquals(0, calculator.add(""));
     }
+
+    @Test
+    public void shouldReturnTheSameNumberWhenOnlyOneNumberIsPassed() {
+        StringCalculator calculator = new StringCalculator();
+        Assertions.assertEquals(5, calculator.add("5"));
+    }
+
 }
