@@ -68,4 +68,9 @@ public class StringCalculatorTest {
     public void shouldNotAddToTheSumWhenNumberIsMoreThanThousand() {
         assertEquals(2, calculator.add("2,1002"));
     }
+
+    @Test
+    public void shouldSupportSingleCharacterCustomDelimiterInBrackets() {
+        assertEquals(6, calculator.add("//[*]\n1*2*3"));
+    }
 }

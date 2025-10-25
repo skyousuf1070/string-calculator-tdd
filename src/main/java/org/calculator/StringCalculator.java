@@ -8,7 +8,10 @@ public class StringCalculator {
         if (numbers.isEmpty()) {
             return 0;
         }
-        if (numbers.startsWith("//")) {
+        if (numbers.startsWith("//[")) {
+            String delimiter = String.valueOf(numbers.charAt(3));
+            return calculateSum(numbers.substring(6).split(Pattern.quote(delimiter)));
+        } else if (numbers.startsWith("//")) {
             String delimiter = String.valueOf(numbers.charAt(2));
             return calculateSum(numbers.substring(4).split(Pattern.quote(delimiter)));
         } else {
