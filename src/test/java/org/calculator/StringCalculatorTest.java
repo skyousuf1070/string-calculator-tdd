@@ -88,4 +88,9 @@ public class StringCalculatorTest {
     public void shouldReturnSumOfNumbersSeparatedByMultipleMultiCharacterCustomDelimiterInBrackets() {
         assertEquals(6, calculator.add("//[***][%%]\n1***2%%3"));
     }
+
+    @Test
+    public void shouldReturnZeroWhenAddMethodIsNotCalled() {
+        assertEquals(0, calculator.getCalledCount());
+    }
 }

@@ -53,4 +53,8 @@ public class StringCalculator {
         }
         return sum;
     }
+
+    public int getCalledCount() {
+        return 0;
+    }
 }
