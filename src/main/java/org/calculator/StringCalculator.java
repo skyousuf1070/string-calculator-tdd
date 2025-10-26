@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class StringCalculator {
+    private int callCount = 0;
+
     public int add(String numbers) {
+        callCount = 1;
+
         if (numbers.isEmpty()) {
             return 0;
         }
@@ -55,6 +59,6 @@ public class StringCalculator {
     }
 
     public int getCalledCount() {
-        return 0;
+        return callCount;
     }
 }

@@ -93,4 +93,10 @@ public class StringCalculatorTest {
     public void shouldReturnZeroWhenAddMethodIsNotCalled() {
         assertEquals(0, calculator.getCalledCount());
     }
+
+    @Test
+    public void shouldReturnOneWhenAddMethodIsCalledOnce() {
+        calculator.add("1,2");
+        assertEquals(1, calculator.getCalledCount());
+    }
 }
