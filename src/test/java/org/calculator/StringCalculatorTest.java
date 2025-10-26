@@ -99,4 +99,12 @@ public class StringCalculatorTest {
         calculator.add("1,2");
         assertEquals(1, calculator.getCalledCount());
     }
+
+    @Test
+    public void shouldReturnTheNumberOfTimesAddMethodIsCalledMultipleTimes() {
+        calculator.add("1,2");
+        calculator.add("6");
+        calculator.add("4,2,8");
+        assertEquals(3, calculator.getCalledCount());
+    }
 }
