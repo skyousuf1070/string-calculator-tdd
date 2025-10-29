@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class StringCalculator {
     public static final String DEFAULT_DELIMITER = ",|\n";
+    public static final String STAR_DELIMITER = "*";
     private int callCount = 0;
 
     public int add(String numbers) {
@@ -20,11 +21,18 @@ public class StringCalculator {
 
         String delimiter = DEFAULT_DELIMITER;
         String numbersToSplit = numbers;
+
         if (numbers.startsWith("//")) {
             delimiter = getDelimiter(numbers);
             numbersToSplit = numbers.substring(numbers.indexOf("\n") + 1);
         }
-        return processAndSum(numbersToSplit.split(delimiter));
+        return processAndSum(numbersToSplit.split(delimiter), delimiter);
+    }
+
+    private int calculateMultiplyIgnoringLargeNumbers(List<Integer> numbers) {
+        return numbers
+                .stream()
+                .reduce(1, (num1, num2) -> num1 * num2);
     }
 
     private static String getDelimiter(String numbers) {
@@ -43,12 +51,16 @@ public class StringCalculator {
         return delimiters;
     }
 
-    private int processAndSum(String[] inputNumbers) {
+    private int processAndSum(String[] inputNumbers, String delimiter) {
         List<Integer> numbers = parseInputStringsToIntegers(inputNumbers);
 
         validateForNegatives(numbers);
 
-        return calculateSumIgnoringLargeNumbers(numbers);
+        if (!delimiter.equals(Pattern.quote(STAR_DELIMITER))) {
+            return calculateSumIgnoringLargeNumbers(numbers);
+        } else {
+            return calculateMultiplyIgnoringLargeNumbers(numbers);
+        }
     }
 
     private static List<Integer> parseInputStringsToIntegers(String[] inputNumbers) {

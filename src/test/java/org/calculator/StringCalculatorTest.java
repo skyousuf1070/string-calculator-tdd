@@ -107,4 +107,9 @@ public class StringCalculatorTest {
         calculator.add("4,2,8");
         assertEquals(3, calculator.getCalledCount());
     }
+
+    @Test
+    public void shouldReturnTheMultiplicationOfNumbersWhenNumbersArePassedSeparatedByCustomDelimiterStar() {
+        assertEquals(12, calculator.add("//*\n2*2*3"));
+    }
 }
