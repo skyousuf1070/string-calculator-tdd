@@ -1,15 +1,19 @@
 package org.calculator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
+import static org.calculator.util.StringCalculatorConstants.DOUBLE_BACKWARD_SLASHES;
+import static org.calculator.util.StringCalculatorConstants.DEFAULT_DELIMITER;
+import static org.calculator.util.StringCalculatorConstants.DOUBLE_BACKWARD_SLASHES_WITH_OPEN_BRACKET;
+import static org.calculator.util.StringCalculatorConstants.LINE_BREAK;
+import static org.calculator.util.StringCalculatorConstants.NEGATIVE_NUMBERS_NOT_ALLOWED;
+import static org.calculator.util.StringCalculatorHelper.getDelimiter;
+import static org.calculator.util.StringCalculatorHelper.splitStringByDelimiter;
+import static org.calculator.util.StringCalculatorHelper.parseInputStringsToIntegers;
+import static org.calculator.util.StringCalculatorHelper.formatNegativeNumbers;
+import static org.calculator.util.StringCalculatorHelper.calculateTotals;
 
 public class StringCalculator {
-    public static final String DEFAULT_DELIMITER = ",|\n";
-    public static final String STAR_DELIMITER = "*";
     private int callCount = 0;
 
     public int add(String numbers) {
@@ -21,75 +25,31 @@ public class StringCalculator {
 
         String delimiter = DEFAULT_DELIMITER;
         String numbersToSplit = numbers;
+        boolean isInputHasBracket = numbers.startsWith(DOUBLE_BACKWARD_SLASHES_WITH_OPEN_BRACKET);
 
-        if (numbers.startsWith("//")) {
+        if (numbers.startsWith(DOUBLE_BACKWARD_SLASHES)) {
             delimiter = getDelimiter(numbers);
-            numbersToSplit = numbers.substring(numbers.indexOf("\n") + 1);
+            numbersToSplit = numbers.substring(numbers.indexOf(LINE_BREAK) + 1);
         }
-        return processAndSum(numbersToSplit.split(delimiter), delimiter);
+
+        String[] inputNumbers = splitStringByDelimiter(numbersToSplit, delimiter);
+        return processAndCalculate(inputNumbers, delimiter, isInputHasBracket);
     }
 
-    private int calculateMultiplyIgnoringLargeNumbers(List<Integer> numbers) {
-        return numbers
-                .stream()
-                .reduce(1, (num1, num2) -> num1 * num2);
-    }
-
-    private static String getDelimiter(String numbers) {
-        if (numbers.startsWith("//[")) {
-            return String.join("|", extractDelimiters(numbers));
-        }
-        return Pattern.quote(String.valueOf(numbers.charAt(2)));
-    }
-
-    private static ArrayList<String> extractDelimiters(String numbers) {
-        ArrayList<String> delimiters = new ArrayList<>();
-        Matcher delimiterMatcher = Pattern.compile("\\[(.*?)]").matcher(numbers);
-        while (delimiterMatcher.find()) {
-            delimiters.add(Pattern.quote(delimiterMatcher.group(1)));
-        }
-        return delimiters;
-    }
-
-    private int processAndSum(String[] inputNumbers, String delimiter) {
+    private int processAndCalculate(String[] inputNumbers, String delimiter, boolean isInputHasBracket) {
         List<Integer> numbers = parseInputStringsToIntegers(inputNumbers);
 
         validateForNegatives(numbers);
 
-        if (!delimiter.equals(Pattern.quote(STAR_DELIMITER))) {
-            return calculateSumIgnoringLargeNumbers(numbers);
-        } else {
-            return calculateMultiplyIgnoringLargeNumbers(numbers);
-        }
-    }
-
-    private static List<Integer> parseInputStringsToIntegers(String[] inputNumbers) {
-        return Arrays.stream(inputNumbers)
-                .filter(s -> !s.isEmpty())
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
+        return calculateTotals(numbers, delimiter, isInputHasBracket);
     }
 
     private void validateForNegatives(List<Integer> numbers) {
         String commaSeparatedNegativeNumbers = formatNegativeNumbers(numbers);
 
         if (!commaSeparatedNegativeNumbers.isEmpty()) {
-            throw new IllegalArgumentException("negative numbers not allowed " + commaSeparatedNegativeNumbers);
+            throw new IllegalArgumentException(NEGATIVE_NUMBERS_NOT_ALLOWED + commaSeparatedNegativeNumbers);
         }
-    }
-
-    private String formatNegativeNumbers(List<Integer> numbers) {
-        return numbers.stream()
-                .filter(n -> n < 0)
-                .map(Object::toString)
-                .collect(Collectors.joining(", "));
-    }
-
-    private static int calculateSumIgnoringLargeNumbers(List<Integer> numbers) {
-        return numbers.stream()
-                .filter(n -> n <= 1000)
-                .mapToInt(Integer::intValue)
-                .sum();
     }
 
     public int getCalledCount() {

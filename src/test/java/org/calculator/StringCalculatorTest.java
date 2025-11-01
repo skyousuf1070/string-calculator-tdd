@@ -112,4 +112,9 @@ public class StringCalculatorTest {
     public void shouldReturnTheMultiplicationOfNumbersWhenNumbersArePassedSeparatedByCustomDelimiterStar() {
         assertEquals(12, calculator.add("//*\n2*2*3"));
     }
+
+    @Test
+    public void shouldReturnTheSumOfNumbersWhenNumbersArePassedSeparatedByCustomDelimiterStarInBrackets() {
+        assertEquals(7, calculator.add("//[*]\n2*2*3"));
+    }
 }
